@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Models | HomeValue{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <div class="page-shell narrow-shell">
+        <p class="eyebrow">Model library</p>
+        <h1>Choose the estimator you want to inspect.</h1>
+        <p>Each option below is discovered directly from the saved files in your `Models` folder.</p>
+    </div>
+</section>
+
+<section class="models-section page-shell">
+    {% if catalogue %}
+        <div class="model-list">
+            {% for model in catalogue %}
+                <article class="model-card">
+                    <div>
+                        <p class="eyebrow">Saved model</p>
+                        <h2>{{ model.name }}</h2>
+                        <p>{{ model.description }}</p>
+                    </div>
+                    <div class="model-card-footer">
+                        <code>{{ model.filename }}</code>
+                        <a class="text-link" href="{{ url_for('predict') }}">Use this model</a>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="notice notice-error">
+            <strong>Models folder is empty.</strong> Add the saved `.pkl` files to `Models` to list them here.
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}About | HomeValue{% endblock %}
+
+{% block content %}
+<section class="page-intro about-intro">
+    <div class="page-shell narrow-shell">
+        <p class="eyebrow">About the project</p>
+        <h1>A housing model, presented as an application.</h1>
+        <p>This site takes the models trained in the notebook and makes them available through a clear client-facing interface.</p>
+    </div>
+</section>
+
+<section class="process-section">
+    <div class="page-shell">
+        <div class="process-row">
+            <span>01</span>
+            <div>
+                <p class="eyebrow">Training data</p>
+                <h2>Property facts become model features.</h2>
+            </div>
+            <p>Location, property size, configuration, construction year, facilities, and availability information are prepared for regression modelling.</p>
+        </div>
+        <div class="process-row">
+            <span>02</span>
+            <div>
+                <p class="eyebrow">Trained models</p>
+                <h2>Several regression methods are saved.</h2>
+            </div>
+            <p>The app loads `features.pkl` to preserve the training column order, then lets a visitor choose a saved estimator.</p>
+        </div>
+        <div class="process-row">
+            <span>03</span>
+            <div>
+                <p class="eyebrow">Prediction</p>
+                <h2>Browser input is made model-ready.</h2>
+            </div>
+            <p>The Flask backend validates the form, recreates the one-hot encoded input row, and returns a price estimate in lakhs.</p>
+        </div>
+    </div>
+</section>
+
+<section class="about-callout">
+    <div class="page-shell about-callout-content">
+        <div>
+            <p class="eyebrow eyebrow-light">Project setup</p>
+            <h2>Keep the saved models with the application.</h2>
+        </div>
+        <p>The app expects `features.pkl` and each trained `.pkl` model in the top-level `Models` folder. It discovers them automatically when the server starts.</p>
+    </div>
+</section>
+{% endblock %}

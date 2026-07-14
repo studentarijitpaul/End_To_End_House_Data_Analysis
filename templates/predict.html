@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Predict | HomeValue{% endblock %}
+
+{% block content %}
+<section class="page-intro">
+    <div class="page-shell narrow-shell">
+        <p class="eyebrow">Price estimator</p>
+        <h1>Tell us about the property.</h1>
+        <p>Choose a model and enter details. The form uses the exact columns saved during training.</p>
+    </div>
+</section>
+
+<section class="predict-section page-shell">
+    {% if not models_ready %}
+        <div class="notice notice-error">
+            <strong>No models are available.</strong>
+            Add `features.pkl` and your trained `.pkl` model files to the `Models` folder, then refresh this page.
+        </div>
+    {% elif error %}
+        <div class="notice notice-error">
+            <strong>Please check the form.</strong> {{ error }}
+        </div>
+    {% endif %}
+
+    {% if models_ready and fields %}
+    <form class="prediction-form" method="post" data-predict-form>
+        <div class="form-topline">
+            <div>
+                <p class="eyebrow">Estimator settings</p>
+                <h2>Model and property details</h2>
+            </div>
+            <div class="field model-field">
+                <label for="model_file">Prediction model</label>
+                <select id="model_file" name="model_file" required>
+                    {% for model in model_options %}
+                        <option value="{{ model.file }}" {% if submitted.get('model_file') == model.file or (not submitted and loop.first) %}selected{% endif %}>{{ model.label }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        {% set numeric_fields = fields | selectattr('kind', 'equalto', 'number') | list %}
+        {% set select_fields = fields | selectattr('kind', 'equalto', 'select') | list %}
+
+        <fieldset>
+            <legend>Property profile</legend>
+            <div class="form-grid form-grid-numbers">
+                {% for field in numeric_fields %}
+                    <div class="field">
+                        <label for="{{ field.name }}">{{ field.label }}</label>
+                        <input
+                            id="{{ field.name }}"
+                            name="{{ field.name }}"
+                            type="number"
+                            min="{{ field.min }}"
+                            max="{{ field.max }}"
+                            step="{{ field.step }}"
+                            value="{{ submitted.get(field.name, field.value) }}"
+                            required
+                        >
+                    </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Location and amenities</legend>
+            <div class="form-grid">
+                {% for field in select_fields %}
+                    <div class="field">
+                        <label for="{{ field.name }}">{{ field.label }}</label>
+                        <select id="{{ field.name }}" name="{{ field.name }}" required>
+                            <option value="" disabled {% if not submitted.get(field.name) %}selected{% endif %}>Select {{ field.label | lower }}</option>
+                            {% for option in field.options %}
+                                <option value="{{ option }}" {% if submitted.get(field.name) == option %}selected{% endif %}>{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                {% endfor %}
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <p>Estimated results are shown in Indian lakhs.</p>
+            <button class="button button-dark" type="submit">Calculate estimate <span aria-hidden="true">→</span></button>
+        </div>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}

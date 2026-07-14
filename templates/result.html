@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Estimate | HomeValue{% endblock %}
+
+{% block content %}
+<section class="page-intro result-intro">
+    <div class="page-shell narrow-shell">
+        <p class="eyebrow">Prediction complete</p>
+        <h1>Here is your estimated price.</h1>
+        <p>Based on the property details you entered and the selected trained model.</p>
+    </div>
+</section>
+
+<section class="result-section page-shell">
+    <article class="price-card">
+        <p class="eyebrow">Estimated property price</p>
+        <p class="price-value">{{ "%.2f" | format(prediction) }} <span>lakhs</span></p>
+        <p class="price-words">Approx. ₹{{ "{:,.0f}".format(prediction * 100000) }}</p>
+    </article>
+
+    <div class="result-details">
+        <div>
+            <span class="detail-label">Model used</span>
+            <strong>{{ model_name }}</strong>
+        </div>
+        <div>
+            <span class="detail-label">Implied price per sq ft</span>
+            <strong>₹{{ "{:,.0f}".format(price_per_sqft) }}</strong>
+        </div>
+        <p>This is a data-driven estimate, not a property valuation or financial advice. Verify the result against current local listings and a qualified valuer before making a decision.</p>
+    </div>
+
+    <div class="result-actions">
+        <a class="button button-dark" href="{{ url_for('predict') }}">Estimate another property <span aria-hidden="true">→</span></a>
+        <a class="text-link" href="{{ url_for('models') }}">Compare available models</a>
+    </div>
+</section>
+{% endblock %}

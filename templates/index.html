@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}HomeValue | House Price Prediction{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <img class="hero-image" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=85" alt="Contemporary residential home" fetchpriority="high">
+    <div class="hero-scrim"></div>
+    <div class="hero-content page-shell">
+        <p class="eyebrow eyebrow-light">Residential price estimation</p>
+        <h1>A clearer starting point for your next property decision.</h1>
+        <p class="hero-copy">Enter the details that matter, choose a trained model, and receive a price estimate in lakhs.</p>
+        {% if models_ready %}
+            <a class="button button-coral" href="{{ url_for('predict') }}">Estimate a property <span aria-hidden="true">→</span></a>
+        {% else %}
+            <a class="button button-coral" href="{{ url_for('about') }}">Set up saved models <span aria-hidden="true">→</span></a>
+        {% endif %}
+    </div>
+</section>
+
+<section class="proof-band">
+    <div class="page-shell proof-grid">
+        <div>
+            <p class="eyebrow">Built around your work</p>
+            <h2>One project. Several ways to estimate.</h2>
+        </div>
+        <div class="proof-stat">
+            <strong>{{ model_count }}</strong>
+            <span>trained models available</span>
+        </div>
+        <p class="proof-copy">Switch models on the prediction screen to compare how different regression approaches respond to the same property.</p>
+    </div>
+</section>
+
+<section class="workflow-section page-shell">
+    <div class="section-heading">
+        <p class="eyebrow">The workflow</p>
+        <h2>From property facts to a useful estimate.</h2>
+    </div>
+    <ol class="workflow-list">
+        <li>
+            <span>01</span>
+            <h3>Choose a model</h3>
+            <p>Select any saved regression model from your training experiment.</p>
+        </li>
+        <li>
+            <span>02</span>
+            <h3>Add property details</h3>
+            <p>Provide location, size, condition, and facilities through a structured form.</p>
+        </li>
+        <li>
+            <span>03</span>
+            <h3>Review the estimate</h3>
+            <p>See the estimated price in lakhs and its implied price per square foot.</p>
+        </li>
+    </ol>
+</section>
+
+<section class="cta-band">
+    <div class="page-shell cta-content">
+        <div>
+            <p class="eyebrow eyebrow-light">Ready when you are</p>
+            <h2>Make the model useful outside the notebook.</h2>
+        </div>
+        <a class="button button-light" href="{{ url_for('predict') }}">Go to prediction <span aria-hidden="true">→</span></a>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="House price prediction using trained machine-learning models.">
+    <title>{% block title %}HomeValue{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="{{ url_for('home') }}" aria-label="HomeValue home">
+            <span class="brand-mark" aria-hidden="true">H</span>
+            <span>HomeValue</span>
+        </a>
+        <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false" data-nav-toggle>
+            <span></span><span></span><span></span>
+        </button>
+        <nav class="site-nav" data-nav>
+            <a href="{{ url_for('home') }}" class="{% if request.endpoint == 'home' %}is-active{% endif %}">Home</a>
+            <a href="{{ url_for('predict') }}" class="{% if request.endpoint == 'predict' %}is-active{% endif %}">Predict</a>
+            <a href="{{ url_for('models') }}" class="{% if request.endpoint == 'models' %}is-active{% endif %}">Models</a>
+            <a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}is-active{% endif %}">About</a>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <a class="brand" href="{{ url_for('home') }}">
+            <span class="brand-mark" aria-hidden="true">H</span>
+            <span>HomeValue</span>
+        </a>
+        <p>Machine-learning estimates for residential property.</p>
+        <p class="footer-note">Use predictions as a starting point, then verify with current local market data.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
